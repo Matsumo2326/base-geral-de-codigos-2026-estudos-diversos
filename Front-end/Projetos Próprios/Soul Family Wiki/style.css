@@ -1,0 +1,16 @@
+body {
+  background-image: url(./imagens-inicial/ChatGPT\ Image\ 13\ de\ jul.\ de\ 2026\,\ 23_11_51.png);
+  background-repeat: repeat;
+  background-size: 800px;
+}
+
+.caixa-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 24px;
+  max-width: 900px;
+  margin: 10px auto;
+  border-radius: 6px;
+  }

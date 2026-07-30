@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Cola — Sistema de Estoque</title>
+<style>
+  :root{
+    --bg:#0d0f12;
+    --panel:#15181d;
+    --line:#23272e;
+    --ink:#e8e6e1;
+    --ink-dim:#8b9099;
+    --accent:#ffb454;
+    --accent-dim:#7a5a2c;
+    --mono: "JetBrains Mono", "SF Mono", Consolas, monospace;
+    --serif: "Georgia", "Iowan Old Style", serif;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+  html,body{margin:0; padding:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; overscroll-behavior-y:none;}
+  body{
+    height:100vh;
+    height:100dvh;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* Top bar */
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 18px 10px;
+    border-bottom:1px solid var(--line);
+    flex-shrink:0;
+  }
+  .brand{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.12em;
+    color:var(--ink-dim);
+    text-transform:uppercase;
+  }
+  .timer{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--accent);
+    background:rgba(255,180,84,0.08);
+    border:1px solid var(--accent-dim);
+    border-radius:6px;
+    padding:4px 10px;
+    min-width:54px;
+    text-align:center;
+  }
+
+  /* Progress dots */
+  .progress{
+    display:flex; gap:5px; padding:10px 18px 0;
+    flex-shrink:0;
+  }
+  .dot{
+    flex:1; height:3px; border-radius:2px;
+    background:var(--line);
+    transition:background .25s;
+  }
+  .dot.active{ background:var(--accent); }
+  .dot.done{ background:var(--ink-dim); }
+
+  /* Slide area */
+  main{
+    flex:1;
+    overflow:hidden;
+    position:relative;
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    padding:22px 20px 18px;
+    overflow-y:auto;
+    opacity:0;
+    transform:translateX(20px);
+    transition:opacity .22s ease, transform .22s ease;
+    pointer-events:none;
+  }
+  .slide.active{
+    opacity:1;
+    transform:translateX(0);
+    pointer-events:auto;
+  }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:6px;
+  }
+  h1{
+    font-family:var(--serif);
+    font-size:26px;
+    line-height:1.15;
+    margin:0 0 14px;
+    color:var(--ink);
+    font-weight:600;
+  }
+  .lede{
+    font-size:15px;
+    line-height:1.5;
+    color:var(--ink-dim);
+    margin:0 0 18px;
+    padding-left:12px;
+    border-left:2px solid var(--accent-dim);
+  }
+
+  .cue{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:14px;
+  }
+  .cue-label{
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--ink-dim);
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    margin-bottom:6px;
+  }
+  .cue p{
+    margin:0;
+    font-size:16px;
+    line-height:1.55;
+    color:var(--ink);
+  }
+
+  ul.points{
+    list-style:none;
+    margin:0 0 16px;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  ul.points li{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:11px 14px;
+    font-size:14.5px;
+    line-height:1.45;
+  }
+  ul.points li b{
+    color:var(--accent);
+    display:block;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    margin-bottom:3px;
+    font-family:var(--mono);
+  }
+
+  .quote{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15px;
+    color:var(--ink-dim);
+    border-left:2px solid var(--accent);
+    padding-left:12px;
+    margin:0 0 16px;
+  }
+
+  .duration-tag{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--ink-dim);
+    background:rgba(255,255,255,0.03);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:4px 12px;
+    margin-bottom:16px;
+  }
+
+  /* Nav controls */
+  footer{
+    display:flex; align-items:center; gap:10px;
+    padding:12px 18px calc(14px + env(safe-area-inset-bottom));
+    border-top:1px solid var(--line);
+    flex-shrink:0;
+  }
+  .nav-btn{
+    flex:1;
+    background:var(--panel);
+    border:1px solid var(--line);
+    color:var(--ink);
+    border-radius:10px;
+    padding:13px 0;
+    font-size:14px;
+    font-weight:600;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+  }
+  .nav-btn:active{ background:#1c2026; }
+  .nav-btn.primary{
+    background:var(--accent);
+    color:#1a1305;
+    border-color:var(--accent);
+  }
+  .nav-btn.primary:active{ background:#e8a548; }
+  .nav-btn[disabled]{ opacity:.35; }
+  .counter{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--ink-dim);
+    white-space:nowrap;
+    padding:0 4px;
+  }
+
+  /* swipe hint */
+  .swipe-hint{
+    position:absolute;
+    bottom:8px; left:0; right:0;
+    text-align:center;
+    font-size:11px;
+    color:var(--ink-dim);
+    opacity:.5;
+    font-family:var(--mono);
+  }
+
+  .grid2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-bottom:16px;
+  }
+  .grid2 .cell{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:10px;
+    font-size:12.5px;
+    line-height:1.4;
+  }
+  .grid2 .cell b{
+    display:block;
+    color:var(--accent);
+    font-family:var(--mono);
+    font-size:11px;
+    margin-bottom:3px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="brand">Cola • Apresentação</span>
+  <span class="timer" id="clock">00:00</span>
+</header>
+
+<div class="progress" id="progress"></div>
+
+<main id="main"></main>
+
+<footer>
+  <button class="nav-btn" id="prevBtn">‹ Voltar</button>
+  <span class="counter" id="counter">1 / 8</span>
+  <button class="nav-btn primary" id="nextBtn">Próximo ›</button>
+</footer>
+
+<script>
+const slides = [
+  {
+    eyebrow: "Abertura",
+    title: "Bem-vindos",
+    duration: "~30s",
+    lede: "Tema: storytelling aplicado ao desenvolvimento de sistemas.",
+    cue: "Boa tarde / noite. Vou apresentar como um sistema de controle de estoque pode resolver problemas reais em pequenas empresas, usando storytelling pra mostrar isso na prática.",
+    points: []
+  },
+  {
+    eyebrow: "O Problema",
+    title: "Tudo começa com um caderninho",
+    duration: "~1 min",
+    lede: "A Loja do João — controle manual que virou gargalo.",
+    cue: "A loja do João vendia bem. No começo, anotar tudo no caderno funcionava. Mas a loja cresceu — e o controle manual virou um gargalo perigoso.",
+    points: []
+  },
+  {
+    eyebrow: "O Problema",
+    title: "Os desafios do crescimento",
+    duration: "~1,5 min",
+    lede: "5 problemas que aparecem quando o negócio cresce.",
+    cue: null,
+    points: [
+      ["Falta de controle", "Impossível saber o estoque sem contar na mão"],
+      ["Erros nos registros", "Divergência entre o físico e o anotado"],
+      ["Perda de vendas", "Produto sem registro fica \"invisível\""],
+      ["Desorganização", "Difícil achar produto, atendimento mais lento"],
+      ["Prejuízo financeiro", "Tudo isso vira perda de dinheiro e credibilidade"]
+    ],
+    quote: "Ex: João não sabia quanto tinha de um produto e perdeu uma venda."
+  },
+  {
+    eyebrow: "A Solução",
+    title: "A tecnologia entra em cena",
+    duration: "~1 min",
+    lede: "João decidiu informatizar o estoque.",
+    cue: "O sistema tem 4 funções principais: cadastro, movimentações, consulta e atualização. Cada venda ou reposição atualiza o estoque automaticamente — sem retrabalho, sem erro humano.",
+    points: []
+  },
+  {
+    eyebrow: "Conceitos Técnicos",
+    title: "O que está por trás",
+    duration: "~1 min",
+    lede: "4 peças que sustentam o sistema.",
+    cue: null,
+    grid: [
+      ["Banco de dados", "Guarda as informações — é o \"arquivo\""],
+      ["Front-end", "Tela que o usuário usa — a \"vitrine\""],
+      ["Back-end", "Processa as ações — a \"cozinha\""],
+      ["Automação", "Tarefas repetitivas feitas pelo sistema"]
+    ]
+  },
+  {
+    eyebrow: "Ferramentas",
+    title: "Tecnologias usadas",
+    duration: "~1 min",
+    lede: "O que vocês vão aprender no curso, aplicado no mercado.",
+    cue: null,
+    grid: [
+      ["HTML", "Estrutura"],
+      ["CSS", "Visual"],
+      ["JavaScript", "Interatividade"],
+      ["PHP / Java", "Lógica do servidor"],
+      ["MySQL / MariaDB", "Armazenamento dos dados"]
+    ]
+  },
+  {
+    eyebrow: "Resultados",
+    title: "Antes e depois",
+    duration: "~1 min",
+    lede: "O impacto na loja do João.",
+    cue: "Menos erros, mais economia de tempo, estoque organizado, atendimento mais rápido, e dados confiáveis pra crescer.",
+    points: [],
+    quote: "Pergunta pra turma: quanto tempo isso economizaria na loja dele?"
+  },
+  {
+    eyebrow: "Conclusão",
+    title: "Resolver problemas reais",
+    duration: "~45s",
+    lede: "Encerramento.",
+    cue: "A história do João mostra que tecnologia bem aplicada transforma negócios. Como futuros desenvolvedores, vocês têm o poder de criar soluções que impactam empresas de verdade. Sistema nasce de problema real e gera valor concreto. Obrigado, abro pra perguntas.",
+    points: []
+  }
+];
+
+const main = document.getElementById('main');
+const progress = document.getElementById('progress');
+const counter = document.getElementById('counter');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const clock = document.getElementById('clock');
+
+let current = 0;
+let seconds = 0;
+let timerInterval = null;
+
+function buildSlideHTML(s){
+  let html = `<div class="eyebrow">${s.eyebrow}</div>`;
+  html += `<h1>${s.title}</h1>`;
+  html += `<span class="duration-tag">⏱ ${s.duration}</span>`;
+  html += `<div class="lede">${s.lede}</div>`;
+  if(s.cue){
+    html += `<div class="cue"><div class="cue-label">Fale assim</div><p>${s.cue}</p></div>`;
+  }
+  if(s.points && s.points.length){
+    html += `<ul class="points">`;
+    s.points.forEach(([t,d]) => {
+      html += `<li><b>${t}</b>${d}</li>`;
+    });
+    html += `</ul>`;
+  }
+  if(s.grid && s.grid.length){
+    html += `<div class="grid2">`;
+    s.grid.forEach(([t,d]) => {
+      html += `<div class="cell"><b>${t}</b>${d}</div>`;
+    });
+    html += `</div>`;
+  }
+  if(s.quote){
+    html += `<div class="quote">${s.quote}</div>`;
+  }
+  return html;
+}
+
+function render(){
+  main.innerHTML = '';
+  slides.forEach((s, i) => {
+    const div = document.createElement('div');
+    div.className = 'slide' + (i === current ? ' active' : '');
+    div.innerHTML = buildSlideHTML(s);
+    main.appendChild(div);
+  });
+
+  progress.innerHTML = '';
+  slides.forEach((s, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === current ? ' active' : (i < current ? ' done' : ''));
+    progress.appendChild(dot);
+  });
+
+  counter.textContent = `${current + 1} / ${slides.length}`;
+  prevBtn.disabled = current === 0;
+  nextBtn.textContent = current === slides.length - 1 ? 'Fim ✓' : 'Próximo ›';
+}
+
+function go(delta){
+  const next = current + delta;
+  if(next < 0 || next >= slides.length) return;
+  current = next;
+  render();
+}
+
+prevBtn.addEventListener('click', () => go(-1));
+nextBtn.addEventListener('click', () => go(1));
+
+// swipe support
+let touchStartX = 0;
+main.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive:true});
+main.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].screenX - touchStartX;
+  if(Math.abs(dx) > 50){
+    go(dx < 0 ? 1 : -1);
+  }
+}, {passive:true});
+
+// keyboard support (for desktop testing)
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight') go(1);
+  if(e.key === 'ArrowLeft') go(-1);
+});
+
+// timer (counts up automatically, total elapsed time)
+function tick(){
+  seconds++;
+  const m = String(Math.floor(seconds/60)).padStart(2,'0');
+  const s = String(seconds%60).padStart(2,'0');
+  clock.textContent = `${m}:${s}`;
+}
+timerInterval = setInterval(tick, 1000);
+
+render();
+</script>
+
+</body>
+</html>

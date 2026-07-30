@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currículo</title>
+  <style>
+      body {
+      font-family: Arial, sans-serif;
+      margin: 10px;
+    }
+    fieldset {
+      margin-bottom: 15px;
+    }
+    legend {
+      font-weight: bold;
+    }
+    table {
+      width: 100%;
+    }
+    td {
+      padding: 5px;
+    }
+    input, select {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <form>
+    <fieldset>
+      <legend>DADOS PESSOAIS</legend>
+      <fieldset>
+        <legend>IDENTIFICAÇÃO</legend>
+        <table>
+          <tr><td>Nome Completo:</td><td><input type="text"></td></tr>
+          <tr><td>CPF:</td><td><input type="text"></td></tr>
+          <tr><td>Número Passaporte:</td><td><input type="text"></td></tr>
+          <tr>
+            <td>Nacionalidade:</td>
+            <td>
+              <input type="radio" name="nacionalidade"> Brasileira
+              <input type="radio" name="nacionalidade"> Estrangeira
+            </td>
+          </tr>
+        </table>
+      </fieldset>
+
+      <fieldset>
+        <legend>DADOS DE NASCIMENTO</legend>
+        <table>
+          <tr><td>Data:</td><td><input type="date"></td></tr>
+          <tr>
+            <td>País:</td>
+            <td><select><option>Brasil</option></select></td>
+          </tr>
+          <tr>
+            <td>UF:</td>
+            <td><select><option>PR</option><option>SP</option></select></td>
+          </tr>
+          <tr><td>Cidade:</td><td><input type="text"></td></tr>
+        </table>
+      </fieldset>
+
+      <fieldset>
+        <legend>SEXO</legend>
+        <input type="radio" name="sexo"> Feminino
+        <input type="radio" name="sexo"> Masculino
+      </fieldset>
+
+      <fieldset>
+        <legend>IDENTIDADE</legend>
+        <table>
+          <tr><td>Número:</td><td><input type="text"></td></tr>
+          <tr><td>Órgão Emissor:</td><td><input type="text"></td></tr>
+          <tr><td>UF:</td><td><select><option>PR</option></select></td></tr>
+          <tr><td>Data:</td><td><input type="date"></td></tr>
+        </table>
+      </fieldset>
+
+      <fieldset>
+        <legend>FILIAÇÃO</legend>
+        <table>
+          <tr><td>Nome do Pai:</td><td><input type="text"></td></tr>
+          <tr><td>Nome da Mãe:</td><td><input type="text"></td></tr>
+        </table>
+      </fieldset>
+    </fieldset>
+
+    <fieldset>
+      <legend>ENDEREÇO</legend>
+      <fieldset>
+        <legend>ENDEREÇO PROFISSIONAL</legend>
+        <table>
+          <tr><td>Instituição/Empresa:</td><td><input type="text"></td></tr>
+          <tr><td>Logradouro:</td><td><select><option>Rua</option></select></td></tr>
+          <tr><td>Endereço:</td><td><input type="text"></td></tr>
+          <tr><td>País:</td><td><select><option>Brasil</option></select></td></tr>
+          <tr><td>UF:</td><td><select><option>PR</option></select></td></tr>
+          <tr><td>CEP:</td><td><input type="text"></td></tr>
+          <tr><td>Cidade:</td><td><input type="text"></td></tr>
+          <tr><td>Bairro:</td><td><input type="text"></td></tr>
+          <tr><td>Caixa Postal:</td><td><input type="text"></td></tr>
+          <tr><td>DDD:</td><td><input type="text"></td></tr>
+          <tr><td>Telefone:</td><td><input type="text"></td></tr>
+          <tr><td>Ramal:</td><td><input type="text"></td></tr>
+          <tr><td>Fax:</td><td><input type="text"></td></tr>
+          <tr><td>E-mail:</td><td><input type="email"></td></tr>
+          <tr><td>Homepage Institucional:</td><td><input type="url"></td></tr>
+        </table>
+      </fieldset>
+
+      <fieldset>
+        <legend>ENDEREÇO RESIDENCIAL</legend>
+        <table>
+          <tr><td>Logradouro:</td><td><select><option>Rua</option></select></td></tr>
+          <tr><td>País:</td><td><select><option>Brasil</option></select></td></tr>
+          <tr><td>UF:</td><td><select><option>PR</option></select></td></tr>
+          <tr><td>CEP:</td><td><input type="text"></td></tr>
+          <tr><td>Cidade:</td><td><input type="text"></td></tr>
+          <tr><td>Bairro:</td><td><input type="text"></td></tr>
+          <tr><td>Caixa Postal:</td><td><input type="text"></td></tr>
+          <tr><td>DDD:</td><td><input type="text"></td></tr>
+          <tr><td>Telefone:</td><td><input type="text"></td></tr>
+          <tr><td>Fax:</td><td><input type="text"></td></tr>
+          <tr><td>E-mail:</td><td><input type="email"></td></tr>
+          <tr><td>Homepage pessoal:</td><td><input type="url"></td></tr>
+        </table>
+      </fieldset>
+
+      <fieldset>
+        <legend>ENDEREÇO PREFERENCIAL PARA CORRESPONDÊNCIA</legend>
+        <input type="radio" name="corresp"> Residencial
+        <input type="radio" name="corresp"> Profissional
+      </fieldset>
+    </fieldset>
+
+    <fieldset>
+      <legend>FORMAÇÃO ACADÊMICA/TITULAÇÃO</legend>
+      <fieldset>
+        <legend>FORMAÇÃO</legend>
+        <table>
+          <tr>
+            <td>Nível:</td>
+            <td>
+              <input type="radio" name="nivel"> Graduação
+              <input type="radio" name="nivel"> Aperfeiçoamento
+              <input type="radio" name="nivel"> Especialização
+              <input type="radio" name="nivel"> Mestrado
+              <input type="radio" name="nivel"> Doutorado
+            </td>
+          </tr>
+          <tr><td>Carga Horária:</td><td><input type="text"></td></tr>
+        </table>
+      </fieldset>
+
+      <fieldset>
+        <legend>INSTITUIÇÃO/CURSO</legend>
+        <table>
+          <tr><td>Instituição:</td><td><input type="text"></td></tr>
+          <tr><td>Nome do Curso:</td><td><input type="text"></td></tr>
+          <tr>
+            <td>Status do Curso:</td>
+            <td>
+              <input type="radio" name="status"> Em andamento
+              <input type="radio" name="status"> Com título obtido
+            </td>
+          </tr>
+          <tr><td>Início:</td><td><input type="text"></td></tr>
+          <tr><td>Conclusão:</td><td><input type="text"></td></tr>
+          <tr><td>Obtenção do título:</td><td><input type="text"></td></tr>
+          <tr><td>Título da Monografia/Dissertação/Tese:</td><td><input type="text"></td></tr>
+          <tr><td>Nome do Orientador:</td><td><input type="text"></td></tr>
+          <tr>
+            <td>Bolsa:</td>
+            <td>
+              <input type="radio" name="bolsa"> Sim
+              <input type="radio" name="bolsa"> Não
+            </td>
+          </tr>
+          <tr><td>Entidade Financeira:</td><td><input type="text"></td></tr>
+        </table>
+      </fieldset>
+    </fieldset>
+
+    <fieldset>
+      <legend>ATUAÇÃO PROFISSIONAL</legend>
+      <fieldset>
+        <legend>INSTITUIÇÃO DE TRABALHO</legend>
+        <table>
+          <tr><td>Instituição/Empresa:</td><td><input type="text"></td></tr>
+          <tr><td>Sigla:</td><td><input type="text"></td></tr>
+        </table>
+      </fieldset>
+
+      <fieldset>
+        <legend>ATIVIDADES EXERCIDAS</legend>
+        <table>
+          <tr>
+            <td colspan="2">
+              <input type="checkbox"> Conselhos, comissões e consultoria<br>
+              <input type="checkbox"> Direção e administração<br>
+              <input type="checkbox"> Ensino<br>
+              <input type="checkbox"> Estágio<br>
+              <input type="checkbox"> Extensão universitária<br>
+              <input type="checkbox"> Pesquisa e desenvolvimento<br>
+              <input type="checkbox"> Serviços técnicos e especializados<br>
+              <input type="checkbox"> Treinamentos ministrados<br>
+              <input type="checkbox"> Outras atividades técnico-científicas
+            </td>
+          </tr>
+        </table>
+      </fieldset>
+
+      <fieldset>
+        <legend>VÍNCULO INSTITUCIONAL</legend>
+        <table>
+          <tr>
+            <td>Período:</td>
+            <td>
+              <input type="radio" name="periodo"> Anterior
+              <input type="radio" name="periodo"> Atual
+            </td>
+          </tr>
+          <tr><td>Início:</td><td><input type="text"> / <input type="text"></td></tr>
+          <tr><td>Fim:</td><td><input type="text"> / <input type="text"></td></tr>
+          <tr>
+            <td>Tipo de Vínculo:</td>
+            <td>
+              <select>
+                <option>Servidor Público</option>
+                <option>Celetista</option>
+                <option>Outro</option>
+              </select>
+            </td>
+          </tr>
+          <tr><td>Carga Horária Semanal:</td><td><input type="text"></td></tr>
+        </table>
+      </fieldset>
+    </fieldset>
+    <input type="submit" value="Enviar">
+    <input type="reset" value="Limpar Tudo">
+  </form>
+</body>
+</html>

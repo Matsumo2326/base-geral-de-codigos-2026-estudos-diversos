@@ -1,0 +1,69 @@
+object nm: Tnm
+  Left = 0
+  Top = 0
+  Caption = 'Meu primeiro aplicativo'
+  ClientHeight = 441
+  ClientWidth = 624
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 15
+  object Label1: TLabel
+    Left = 24
+    Top = 43
+    Width = 75
+    Height = 15
+    Caption = 'Digite Nota 1'
+    Color = clBtnFace
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 24
+    Top = 72
+    Width = 69
+    Height = 15
+    Caption = 'Digite Nota 2'
+  end
+  object lbmedia: TLabel
+    Left = 144
+    Top = 129
+    Width = 33
+    Height = 15
+    Caption = 'Media'
+  end
+  object edbN1: TEdit
+    Left = 99
+    Top = 40
+    Width = 121
+    Height = 23
+    TabOrder = 0
+  end
+  object edbN2: TEdit
+    Left = 99
+    Top = 69
+    Width = 121
+    Height = 23
+    TabOrder = 1
+  end
+  object btncalcularmedia: TButton
+    Left = 99
+    Top = 98
+    Width = 121
+    Height = 25
+    Caption = 'Calcular media'
+    TabOrder = 2
+    OnClick = btncalcularmediaClick
+  end
+  object btnSair: TButton
+    Left = 99
+    Top = 160
+    Width = 121
+    Height = 25
+    Caption = 'Sair'
+    TabOrder = 3
+    OnClick = btnSairClick
+  end
+end

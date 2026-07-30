@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://vinicius-babinski.github.io/field_set_2DS_2025/ -->
+<html lang="pt-br">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        fieldset {
+            border: 1px solid #bba;
+            border-radius: 4px;
+            padding: 4px 8px 10px 8px;
+            line-height: 1.4;
+        }
+
+        legend {
+            margin-left: 10px;
+        }
+
+        #legenda {
+            color: rgb(74, 120, 220);
+        }
+
+        input,
+        select {
+            width: 100%;
+            min-width: 10%;
+            max-width: 100%;
+            padding: 0px;
+        }
+
+        input[type="radio"] {
+            min-width: 15px;
+            max-width: 15px;
+            padding: 0px;
+        }
+
+        input[type="checkbox"] {
+            min-width: 15px;
+            max-width: 15px;
+            padding: 0px;
+        }
+
+        table {
+            width: 100%;
+            border-spacing: 0px;
+        }
+
+        td {
+            padding: 2px 4px;
+            min-width: 100px;
+        }
+
+        tr {
+            padding: 2px 4px;
+            min-width: 100px;
+        }
+
+        #no {
+            padding: 0px;
+        }
+    </style>
+    <style id="dark-reader-style" type="text/css">
+        @media screen {
+            html {
+                -webkit-transition: -webkit-filter 300ms linear;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <fieldset>
+            <legend><b style="font-family:Arial;">DADOS PESSOAIS</b></legend>
+            <fieldset>
+                <legend id="legenda">Identificação</legend>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label>Nome Completo:</label><br>
+                                <input type="text">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label>Nacionalidade:</label><br>
+                                <select>
+                                    <option>Brasileira</option>
+                                    <option>Estrangeira</option>
+                                </select>
+                            </td>
+                            <td>
+                                <label>CPF:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>Número do Passaporte:</label><br>
+                                <input type="text">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+            <table>
+                <tbody>
+                    <tr>
+                        <td id="no">
+                            <fieldset>
+                                <legend id="legenda">Dados de Nascimento</legend>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <label>País:</label><br>
+                                                <select>
+                                                    <option>Brasil</option>
+                                                    <option>Estados Unidos</option>
+                                                    <option>Russia</option>
+                                                    <option>Espanha</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <label>UF:</label><br>
+                                                <select>
+                                                    <option>Paraná</option>
+                                                    <option>New York</option>
+                                                    <option>Moscou</option>
+                                                    <option>Madrid</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <label>Cidade:</label><br>
+                                                <input type="text">
+                                            </td>
+                                            <td>
+                                                <label>Data:</label><br>
+                                                <input type="date">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </fieldset>
+                        </td>
+                        <td id="no" width="33%">
+                            <fieldset>
+                                <legend id="legenda">Sexo</legend>
+                                <input type="radio" id="sexo1" name="sexo" value="1">
+                                <label for="sexo1">Feminino</label><br>
+                                <input type="radio" id="sexo2" name="sexo" value="2">
+                                <label for="sexo2">Masculino</label>
+                            </fieldset>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <fieldset>
+                <legend id="legenda">Identidade</legend>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label>Número:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>Órgão Emissor:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>UF:</label><br>
+                                <select>
+                                    <option>Paraná</option>
+                                    <option>New York</option>
+                                    <option>Moscou</option>
+                                    <option>Madrid</option>
+                                </select>
+                            </td>
+                            <td>
+                                <label>Data:</label><br>
+                                <input type="date">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend id="legenda">Filiação</legend>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label>Nome do Pai:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>Nome da Mãe:</label><br>
+                                <input type="text">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </fieldset>
+        <br>
+        <fieldset>
+            <legend><b style="font-family:Arial;">ENDEREÇO</b></legend>
+            <fieldset>
+                <legend id="legenda">Endereço Profissional</legend>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">
+                                <label>Empresa/Instituição:</label><br>
+                                <input type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Logradouro:</label><br>
+                                <select>
+                                    <option>Rua</option>
+                                    <option>Avenida</option>
+                                    <option>Traveça</option>
+                                    <option>Beco</option>
+                                    <option>Passagem</option>
+                                </select>
+                            </td>
+                            <td colspan="3">
+                                <label>Endereço:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>Bairro:</label><br>
+                                <input type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>País:</label><br>
+                                <select>
+                                    <option>Brasil</option>
+                                    <option>Estados Unidos</option>
+                                    <option>Russia</option>
+                                    <option>Espanha</option>
+                                </select>
+                            </td>
+                            <td>
+                                <label>UF:</label><br>
+                                <select>
+                                    <option>Paraná</option>
+                                    <option>New York</option>
+                                    <option>Moscou</option>
+                                    <option>Madrid</option>
+                                </select>
+                            </td>
+                            <td colspan="2">
+                                <label>Cidade:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>CEP:</label><br>
+                                <input type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>DDD:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>Fone:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>Ramal:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>Fax:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <label>Homepage Institucional:</label><br>
+                                <input type="text">
+                            </td>
+                            <td colspan="2">
+                                <label>E-mail:</label><br>
+                                <input type="text">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend id="legenda">Endereço Residêncial</legend>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label>Logradouro:</label><br>
+                                <select>
+                                    <option>Rua</option>
+                                    <option>Avenida</option>
+                                    <option>Traveça</option>
+                                    <option>Beco</option>
+                                    <option>Passagem</option>
+                                </select>
+                            </td>
+                            <td colspan="3">
+                                <label>Endereço:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>Bairro:</label><br>
+                                <input type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>País:</label><br>
+                                <select>
+                                    <option>Brasil</option>
+                                    <option>Estados Unidos</option>
+                                    <option>Russia</option>
+                                    <option>Espanha</option>
+                                </select>
+                            </td>
+                            <td>
+                                <label>UF:</label><br>
+                                <select>
+                                    <option>Paraná</option>
+                                    <option>New York</option>
+                                    <option>Moscou</option>
+                                    <option>Madrid</option>
+                                </select>
+                            </td>
+                            <td colspan="2">
+                                <label>Cidade:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>CEP:</label><br>
+                                <input type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>DDD:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>Fone:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>Ramal:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>Fax:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <label>Homepage Institucional:</label><br>
+                                <input type="text">
+                            </td>
+                            <td colspan="2">
+                                <label>E-mail:</label><br>
+                                <input type="text">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend id="legenda">Endereço Preferencial Para Correspondência</legend>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="radio" id="end1" name="end" value="1">
+                                <label for="end1">Profissional</label><br>
+                            </td>
+                            <td>
+                                <input type="radio" id="end2" name="end" value="1">
+                                <label for="end2">Residêncial</label><br>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </fieldset>
+        <br>
+        <fieldset>
+            <legend><b style="font-family:Arial;">FORMAÇÃO ACADÊMICA/TITULAÇÃO</b></legend>
+            <fieldset>
+                <legend id="legenda">Formação</legend>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label>Nível:</label><br>
+                                <select>
+                                    <option>Graduação</option>
+                                    <option>Aperfeiçoamento</option>
+                                    <option>Especialização</option>
+                                    <option>Mestrado</option>
+                                    <option>Doutrado</option>
+                                </select>
+                            </td>
+                            <td>
+                                <label>Carga Horária:</label><br>
+                                <input type="text">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend id="legenda">Instituição/Curso</legend>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label>Instituição:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>Nome do Curso:</label><br>
+                                <input type="text">
+                            </td>
+                            <td colspan="2">
+                                <label>Status:</label><br>
+                                <select>
+                                    <option>em andamento</option>
+                                    <option>com título obtido</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Período:</label><br>
+                                <select>
+                                    <option>Início</option>
+                                    <option>Conclusão</option>
+                                    <option>Obtenção do Título</option>
+                                </select>
+                            </td>
+                            <td colspan="2">
+                                <label>Título da Monografia/Disseratação/Tese:</label><br>
+                                <input type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Nome Completo do Orientador:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>Bolsa:</label><br>
+                                <select>
+                                    <option>Não</option>
+                                    <option>Sim</option>
+                                </select>
+                            </td>
+                            <td>
+                                <label>Entidade Financeira:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </fieldset>
+        <br>
+        <fieldset>
+            <legend><b style="font-family:Arial;">ATUAÇÃO PROFISSIONAL</b></legend>
+            <fieldset>
+                <legend id="legenda">Instituição De Trabalho</legend>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label>Instituição/Empresa:</label><br>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <label>Sigla:</label><br>
+                                <input type="text">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend id="legenda">Atividade(s) Exercida(s) Na Instituição</legend>
+                <input type="checkbox" id="a1" value="1">
+                <label for="a1">Conselhos, comissões e consultoria</label><br>
+                <input type="checkbox" id="a2" value="2">
+                <label for="a2">Direção e administração</label><br>
+                <input type="checkbox" id="a3" value="3">
+                <label for="a3">Ensino</label><br>
+                <input type="checkbox" id="a4" value="4">
+                <label for="a1">Estágio</label><br>
+                <input type="checkbox" id="a5" value="5">
+                <label for="a2">Extensão universitária</label><br>
+                <input type="checkbox" id="a6" value="6">
+                <label for="a3">Pesquisa e desenvolvimento</label><br>
+                <input type="checkbox" id="a7" value="7">
+                <label for="a2">Serviços técnicos e especializados</label><br>
+                <input type="checkbox" id="a8" value="8">
+                <label for="a3">Treinamentos ministrados</label><br>
+                <input type="checkbox" id="a8" value="8">
+                <label for="a3">Outras atividades técnico-científicas</label><br>
+            </fieldset>
+            <fieldset>
+                <legend id="legenda">Vínculo Institucional</legend>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label>Período:</label><br>
+                                <select>
+                                    <option>Anterior</option>
+                                    <option>Atual</option>
+                                </select>
+                            </td>
+                            <td>
+                                <label>Início:</label><br>
+                                <input type="date">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Fim:</label><br>
+                                <input type="date">
+                            </td>
+                            <td>
+                                <label>Típo de Vinculo:</label><br>
+                                <select>
+                                    <option>Servidor Público</option>
+                                    <option>Celetista</option>
+                                    <option>Outro</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Carga Horária Semanal</label><br>
+                                <input type="text">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </fieldset>
+    </form>
+
+
+</body>
+
+</html>

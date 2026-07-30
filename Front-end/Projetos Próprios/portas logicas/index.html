@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LogicLab — Simulador de Portas Lógicas</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- SCAN LINE OVERLAY -->
+<div class="scanlines"></div>
+
+<!-- PARTICLES BACKGROUND -->
+<canvas id="bgCanvas"></canvas>
+
+<!-- TUTORIAL OVERLAY -->
+<div id="tutorialOverlay" class="tutorial-overlay active">
+  <div class="tutorial-modal">
+    <div class="tutorial-header">
+      <span class="tutorial-badge">LOGICLAB v2.4</span>
+      <h2>Bem-vindo ao <span class="neon-text">Simulador</span> de Lógica Digital</h2>
+    </div>
+    <div class="tutorial-steps">
+      <div class="t-step active" data-step="0">
+        <div class="step-icon">⚡</div>
+        <h3>O que é Lógica Booleana?</h3>
+        <p>Lógica Booleana é a base de todos os computadores. Opera apenas com dois valores: <strong>0</strong> (falso/desligado) e <strong>1</strong> (verdadeiro/ligado). Toda computação moderna é construída sobre esses dois estados.</p>
+      </div>
+      <div class="t-step" data-step="1">
+        <div class="step-icon">🔮</div>
+        <h3>O que são Portas Lógicas?</h3>
+        <p>Portas lógicas são circuitos eletrônicos que recebem sinais de entrada (0 ou 1) e produzem uma saída baseada em regras matemáticas. São os blocos fundamentais de processadores, memórias e todos os chips digitais.</p>
+      </div>
+      <div class="t-step" data-step="2">
+        <div class="step-icon">🛠️</div>
+        <h3>Como usar o LogicLab</h3>
+        <p>Clique nos botões <strong>A</strong> e <strong>B</strong> de cada porta para alternar entre 0 e 1. A saída atualiza em tempo real. Use o <strong>Modo Construtor</strong> para conectar portas entre si e criar circuitos complexos!</p>
+      </div>
+    </div>
+    <div class="tutorial-nav">
+      <button class="tut-btn prev" id="tutPrev" onclick="tutNav(-1)" disabled>← Anterior</button>
+      <div class="step-dots">
+        <span class="dot active" data-dot="0"></span>
+        <span class="dot" data-dot="1"></span>
+        <span class="dot" data-dot="2"></span>
+      </div>
+      <button class="tut-btn next" id="tutNext" onclick="tutNav(1)">Próximo →</button>
+    </div>
+    <button class="tut-skip" onclick="closeTutorial()">Pular Tutorial</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-group">
+      <svg class="logo-icon" viewBox="0 0 40 40" fill="none">
+        <rect x="2" y="12" width="16" height="16" rx="2" stroke="var(--neon-cyan)" stroke-width="1.5"/>
+        <line x1="18" y1="17" x2="26" y2="17" stroke="var(--neon-cyan)" stroke-width="1.5"/>
+        <line x1="18" y1="23" x2="26" y2="23" stroke="var(--neon-cyan)" stroke-width="1.5"/>
+        <path d="M26 14 C34 14 38 17 38 20 C38 23 34 26 26 26 Z" stroke="var(--neon-cyan)" stroke-width="1.5" fill="none"/>
+        <circle cx="8" cy="12" r="2" fill="var(--neon-pink)"/>
+        <circle cx="8" cy="28" r="2" fill="var(--neon-pink)"/>
+        <circle cx="38" cy="20" r="2" fill="var(--neon-green)"/>
+      </svg>
+      <div>
+        <div class="logo-text">LogicLab</div>
+        <div class="logo-sub">Digital Logic Simulator</div>
+      </div>
+    </div>
+    <nav class="main-nav">
+      <button class="nav-btn active" data-section="simulator" onclick="switchSection('simulator')">Simulador</button>
+      <button class="nav-btn" data-section="builder" onclick="switchSection('builder')">Construtor</button>
+      <button class="nav-btn" data-section="reference" onclick="switchSection('reference')">Referência</button>
+    </nav>
+    <button class="help-btn" onclick="openTutorial()">
+      <span>?</span> Tutorial
+    </button>
+  </div>
+</header>
+
+<!-- ===== SIMULATOR SECTION ===== -->
+<section id="simulatorSection" class="section active">
+  <div class="section-header">
+    <h1>Portas <span class="neon-text">Lógicas</span></h1>
+    <p class="section-desc">Clique nas entradas A e B para alternar entre 0 e 1. Observe a saída mudar em tempo real.</p>
+  </div>
+
+  <div class="gates-grid" id="gatesGrid">
+    <!-- Cards gerados pelo JS -->
+  </div>
+</section>
+
+<!-- ===== BUILDER SECTION ===== -->
+<section id="builderSection" class="section">
+  <div class="section-header">
+    <h1>Construtor de <span class="neon-text">Circuitos</span></h1>
+    <p class="section-desc">Adicione portas ao canvas e conecte-as para criar circuitos lógicos.</p>
+  </div>
+
+  <div class="builder-layout">
+    <div class="builder-palette">
+      <div class="palette-title">COMPONENTES</div>
+      <div class="palette-gates" id="paletteGates"></div>
+      <div class="palette-title" style="margin-top:20px">CONTROLES</div>
+      <button class="palette-action" onclick="builderClear()">🗑️ Limpar Tudo</button>
+      <button class="palette-action" onclick="builderEvaluate()">⚡ Simular</button>
+      <div class="palette-info" id="builderInfo">Adicione portas clicando nos botões acima, depois conecte-as arrastando as entradas/saídas.</div>
+    </div>
+    <div class="builder-canvas-wrap">
+      <canvas id="builderCanvas"></canvas>
+      <div id="builderGates"></div>
+      <div class="canvas-hint">Clique em "+" para adicionar portas → arraste saída para entrada para conectar</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== REFERENCE SECTION ===== -->
+<section id="referenceSection" class="section">
+  <div class="section-header">
+    <h1>Tabelas de <span class="neon-text">Referência</span></h1>
+    <p class="section-desc">Guia completo de todas as portas lógicas com tabelas verdade.</p>
+  </div>
+  <div class="ref-grid" id="refGrid"></div>
+</section>
+
+<!-- SOUND ENGINE (hidden) -->
+<div id="soundEngine" style="display:none"></div>
+
+<script src="./app.js"></script>
+</body>
+</html>

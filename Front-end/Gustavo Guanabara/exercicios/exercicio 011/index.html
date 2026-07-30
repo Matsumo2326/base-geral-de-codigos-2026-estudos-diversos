@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midia dinãmica</title>
+</head>
+<body>
+    <h1>Imagens dinãmicas</h1>
+    <picture>
+        <source media="(max-width: 750px )" srcset="https://github.com/gustavoguanabara/html-css/blob/master/desafios/modulo-01/d007/imagens/paisagem-p.png?raw=true" type="image/png">
+        <source media="(max-width: 1050px )" srcset="https://github.com/gustavoguanabara/html-css/blob/master/desafios/modulo-01/d007/imagens/paisagem-m.png?raw=true" type="image/png">
+        <img src="https://github.com/gustavoguanabara/html-css/blob/master/desafios/modulo-01/d007/imagens/paisagem-g.png?raw=true" alt="Imagem grande">
+    </picture>
+
+    <h1>Reproduzindo aúdios</h1>
+
+    <audio controls preload="metadata" loop>
+        <source src="./midia/i-like-your-cut-g-revisited.mp3" type="audio/mpeg">
+        <source src="./midia/i-like-your-cut-g-revisited.ogg" type="audio/mpeg">
+        <source src="./midia/i-like-your-cut-g-revisited.wav" type="audio/mpeg">
+        <p>Infelizmente seu não conseguimos mostrar a midia <a download="i-like-your-cut-g-revisited.mp3" href="./midia/i-like-your-cut-g-revisited.mp3">baixe ela aqui.</a></p>
+    </audio>
+
+    <h1>Videos</h1>
+    <video width="600px" poster="https://images.pexels.com/photos/6415078/pexels-photo-6415078.jpeg" controls autoplay>
+        <source src="./midia/14308238_1920_1080_24fps.mp4" type="video/mp4">
+        <source src="./midia/14308238_1920_1080_24fps.webm" type="video/webm">
+        <source src="./midia/14308238_1920_1080_24fps.ogg" type="video/ogg">
+        <p>Seu navegador não é compativel</p>
+    </video>
+
+    <h1>Videos Incorporado do Youtube</h1>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/GnWKK50nHQg?si=fMHkDo5Azc29b7rs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</body>
+</html>

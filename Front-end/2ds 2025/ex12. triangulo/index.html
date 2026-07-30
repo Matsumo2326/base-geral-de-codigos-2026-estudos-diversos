@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Utilizando JS para numeros triangulares</h1>
+    <script>
+        let base = parseInt(window.prompt("Numeros triangulares", "Digite aqui um numero inteiro"));
+
+        for(cont = 1; cont <= base; cont++){
+        let total = (cont*(cont+1)/2);
+        document.write ("para uma base triangular de " + cont + " teremos um total de " + total + " elementos<br>");
+    }
+        //funções intrinsecas
+
+        //eval(string): Recebe uma cadeia de caracteres e a executa como se fosse uma sentença de JS
+
+        //parseInt(cadeia, base):Converte uma string, que representa um numero em uma base predefinida para base 10 
+
+        //parseFloat(cadeia):Convete uma string que representa um numero, para um numero com ponto flutuante. caso a string não possa ser avaliada, a função o retorna 0
+
+        //isNaN(numero): Devolve um booleano dependendo do  que recebe por parametro. se nao a um numero devolve um true, se é um numero devolve false. a funçao costuma trabalhar em combinação com a funçao perseInt ou parseFloat, para saber se o que devolvem estas duas funções é um numero ou não
+    </script>
+
+
+</body>
+</html>

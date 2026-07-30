@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--Biblioteca API CANVAS 2D-->
+   <canvas width="600" height="400"></canvas>
+   <script>
+    let tela = document.querySelector('canvas');
+    let pincel = tela.getContext('2d');
+    
+    pincel.fillStyle = "lightgray";//cor do pincel
+    pincel.fillRect(0,0,600,400);
+
+    pincel.fillStyle = "green";//cor do pincel
+    pincel.fillRect(0,0,200,400); 
+
+    pincel.fillStyle = "red";//cor do pincel
+    pincel.fillRect(400,0,200,400); 
+   </script>
+</head>
+<body>
+    
+</body>
+</html>

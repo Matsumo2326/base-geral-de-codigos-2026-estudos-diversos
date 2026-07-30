@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS - IF</title>
+</head>
+<body>
+    <script>
+        let credito = 500;
+        let preco = 100;
+        var artigo = "Livro";
+        let carrinho;
+
+        if(credito >= preco) {
+            document.writeln("Voce conseguiu: " + artigo + "<br>");
+            document.writeln("O preço é: " + preco + "<br>");
+            credito = credito - preco;
+            carrinho = carrinho + artigo;
+            document.writeln("seu credito é: " + credito + "<br>");
+        }
+        else{
+            document.writeln("Seu credito acabou")
+            window.alert("Seu credito acabou")
+        }
+    </script>
+</body>
+</html>

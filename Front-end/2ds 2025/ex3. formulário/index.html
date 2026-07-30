@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulários</title>
+</head>
+<body>
+    <h1>Aprendendo sobre form</h1>
+    <!-- toda vez que form clicado no input do tipo submi, todos os input seram transformados em variaveis, e o nome dessas variaveis sera o valor que esta no atributo id. esses dados seram enviados para o endereço especificado no action (url) -->
+
+    
+    <form action="">
+        <table>
+        <tr>
+            <td><label for="nome">Nome: </label></td>
+            <td><input type="text" id="nome" name="nome" placeholder="Digite seu nome" size="35"></td>
+        </tr>
+    <br>
+        <tr>
+            <td><label for="email">E-mail:</label></td>
+            <td><input type="email" id="email" name="email" placeholder="Digite seu e-mail" size="35"></td>
+        </tr>
+    <br>
+        <tr>
+            <td><label for="senha">Senha:</label></td>
+            <td><input type="password" id="password" placeholder="Digite sua senha" maxlength="8"></td>
+        </tr>
+    <br>
+        <tr>
+            <td><label for="id">Id:</label></td>
+            <td><input type="number" id="id" name="id" placeholder="Digite seu id" required ></td>
+        </tr>
+    <br>
+        <tr>
+            <td><label for="nascimento">Nascimento:</label></td>
+            <td><input type="date" id="date" name="Nascimento" placeholder="Digite sua data de nascimento"></td>
+        </tr>
+    <br>
+        <tr>
+            <td><label for="checkbox">Quais animais?</label></td>
+            <td>
+                <input type="checkbox" name="caixas" id="caixas" value="Cachorro" checked>Cachorro
+                <input type="checkbox" name="caixas" id="caixas" value="Gato">Gato
+                <input type="checkbox" name="caixas" id="caixas" value="Coelho">Coelho
+            </td>
+        </tr>
+    <br>
+        <tr>
+            <td><label for="radio"></label>Você pode ter eles?</td>
+            <td>
+                <input type="radio" name="radio" id="radio" value="Sim">Sim
+                <input type="radio" name="radio" id="radio" value="Não">Não
+            </td>
+        </tr>
+    <br>
+        <tr>
+            <td>
+                <label for="esports">qual sua modalidade favorita?</label>
+            </td>
+            <td>
+                <select name="esports" id="esports">
+                <option value="Basquete">Basquete</option>
+                <option value="Futebol" selected>Futebol</option>
+                <option value="Volei">Volei</option>
+                <option value="F1">F1</option></select>
+            </td>
+        </tr>
+    <br>
+        <tr>
+            <td><label for="AI">Qual AI você conhece?</label></td>
+            <td><select name="AI" id="Ai">
+                <option value="Chat GPT">Chat GPT</option>
+                <option value="Copilot">Copilot</option>
+                <option value="Gemini">Gemini</option>
+            </select></td>
+        </tr>
+    <br>
+        <tr>
+            <td><label for="cor"></label>Cor:</td>
+            <td><input type="color" id="color" name="cor"></td>
+        </tr>
+    <br>
+        <tr>
+    <br>
+        <tr>    
+            <td><label for="sugestao">deixe aqui seu comentario</label></td>
+            <td><textarea name="sugestao" id="sugestao" rows="10" cols="40"></textarea></td>
+        </tr>
+    <br>
+            <td>&nbsp</td>
+            <td>
+                <input type="submit" id="Salvar" name="Salvar" value="Enviar">  
+                <input type="reset" id="calcelar" name="cancelar" value="Cancelar">
+            </td>
+        </tr>
+    </table>
+    </form>
+
+</body>
+</html>

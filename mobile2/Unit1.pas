@@ -1,0 +1,57 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  Tnm = class(TForm)
+    edbN1: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    edbN2: TEdit;
+    btncalcularmedia: TButton;
+    lbmedia: TLabel;
+    btnSair: TButton;
+    procedure btncalcularmediaClick(Sender: TObject);
+    procedure btnSairClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  nm: Tnm;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tnm.btncalcularmediaClick(Sender: TObject);
+  var n1, n2, media : double;
+begin
+       n1 := strToFloat(edbN1.Text);
+       n2 := strToFloat(edbN2.Text);
+
+       media := (n1 + n2) /2;
+
+       if media >= 6.0 then
+        lbmedia.Font.Color := clgreen
+       else
+        lbmedia.Font.Color := clred;
+
+
+
+
+       lbmedia.Caption := floatToStr(media);
+end;
+
+procedure Tnm.btnSairClick(Sender: TObject);
+begin
+  close;
+end;
+
+end.

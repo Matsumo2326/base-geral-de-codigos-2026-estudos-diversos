@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creeper</title>
+</head>
+<body>
+    <canvas width="500" height="500"></canvas>
+    <script>
+        let tela = document.querySelector('canvas');
+        let pincel = tela.getContext('2d');
+
+        // quadrado verde maior
+        
+        pincel.fillStyle = "darkgreen"
+        pincel.fillRect(0,0,600,600)
+
+        pincel.fillStyle = "black"
+        pincel.fillRect(100,75,100,100)
+        pincel.fillRect(300,75,100,100)
+
+        pincel.fillStyle = "black"
+        pincel.fillRect(200,175,100,100)
+
+        pincel.fillStyle = "black"
+        pincel.fillRect(150,200,200,100)
+
+        pincel.fillStyle = "black"
+        pincel.fillRect(150,300,50,50)
+        pincel.fillRect(300,300,50,50)
+
+
+        
+
+      
+
+
+
+    </script>
+</body>
+</html>

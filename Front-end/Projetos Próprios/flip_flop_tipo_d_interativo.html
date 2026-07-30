@@ -1,0 +1,575 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); background: transparent; }
+
+.app { max-width: 680px; padding: 1.5rem 0; }
+
+.hero { text-align: center; margin-bottom: 2rem; }
+.hero h1 { font-size: 22px; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
+.hero p { font-size: 14px; color: var(--text-secondary); }
+
+.tabs { display: flex; gap: 4px; margin-bottom: 1.5rem; border-bottom: 0.5px solid var(--border); padding-bottom: 0; }
+.tab { padding: 8px 16px; font-size: 13px; font-weight: 500; color: var(--text-secondary); border: none; background: none; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -0.5px; transition: all .15s; border-radius: var(--radius) var(--radius) 0 0; }
+.tab:hover { color: var(--text-primary); background: var(--surface-1); }
+.tab.active { color: var(--text-accent); border-bottom-color: var(--border-accent); }
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ===== TAB 1: CIRCUITO ===== */
+.circuit-area { background: var(--surface-1); border-radius: 12px; border: 0.5px solid var(--border); padding: 1.5rem; margin-bottom: 1rem; }
+
+.svg-circuit { width: 100%; margin-bottom: 1rem; }
+
+.controls { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1rem; }
+
+.ctrl-card { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 8px; }
+.ctrl-label { font-size: 12px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+.ctrl-title { font-size: 16px; font-weight: 500; color: var(--text-primary); }
+
+.signal-btn { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: var(--radius); border: 0.5px solid var(--border-strong); background: var(--surface-2); cursor: pointer; font-size: 14px; font-weight: 500; color: var(--text-primary); transition: all .15s; user-select: none; }
+.signal-btn:hover { background: var(--surface-1); }
+.signal-btn:active { transform: scale(0.97); }
+.signal-btn .led { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid; transition: all .2s; flex-shrink: 0; }
+.led-off { background: #1a2a0a; border-color: #3a5a1a; }
+.led-on  { background: #7ddb5c; border-color: #5ab33e; box-shadow: 0 0 6px #7ddb5c88; }
+.led-clk-off { background: #0a1a2a; border-color: #1a3a5a; }
+.led-clk-on  { background: #5cb8db; border-color: #3e9ab3; box-shadow: 0 0 6px #5cb8db88; }
+
+.outputs-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1rem; }
+.out-card { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 1rem; text-align: center; }
+.out-name { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
+.out-val { font-size: 36px; font-weight: 500; transition: all .25s; font-family: var(--font-mono); }
+.out-val.zero { color: var(--text-muted); }
+.out-val.one { color: var(--text-success); }
+
+.clock-btn { width: 100%; padding: 12px; border-radius: var(--radius); border: 0.5px solid var(--border-accent); background: var(--bg-accent); color: var(--text-accent); font-size: 14px; font-weight: 500; cursor: pointer; transition: all .15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.clock-btn:hover { background: var(--fill-accent); color: var(--on-accent); }
+.clock-btn:active { transform: scale(0.98); }
+
+.explanation-box { background: var(--bg-success); border: 0.5px solid var(--border-success); border-radius: 12px; padding: 1rem; font-size: 13px; color: var(--text-success); line-height: 1.5; min-height: 60px; transition: all .3s; }
+.explanation-box.warn { background: var(--bg-warning); border-color: var(--border-warning); color: var(--text-warning); }
+
+/* ===== TAB 2: TABELA ===== */
+.truth-table-wrap { background: var(--surface-1); border-radius: 12px; border: 0.5px solid var(--border); padding: 1.5rem; margin-bottom: 1rem; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { font-size: 12px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; padding: 10px 12px; border-bottom: 0.5px solid var(--border-strong); text-align: center; }
+td { padding: 10px 12px; text-align: center; border-bottom: 0.5px solid var(--border); color: var(--text-primary); transition: background .2s; font-family: var(--font-mono); }
+tr:last-child td { border-bottom: none; }
+tr.active-row td { background: var(--bg-accent); color: var(--text-accent); font-weight: 500; }
+tr.hl-zero td:last-child { color: var(--text-muted); }
+tr.hl-one td:last-child { color: var(--text-success); }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+.tag-keep { background: var(--bg-warning); color: var(--text-warning); }
+.tag-set { background: var(--bg-success); color: var(--text-success); }
+.tag-reset { background: var(--surface-1); color: var(--text-muted); border: 0.5px solid var(--border-strong); }
+
+/* ===== TAB 3: DIAGRAMA DE TEMPO ===== */
+.timing-wrap { background: var(--surface-1); border-radius: 12px; border: 0.5px solid var(--border); padding: 1.5rem; margin-bottom: 1rem; }
+.timing-canvas { width: 100%; height: 220px; display: block; }
+.timing-legend { display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap; }
+.timing-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+.timing-btns { display: flex; gap: 8px; }
+.timing-btns button { flex: 1; padding: 10px; border-radius: var(--radius); border: 0.5px solid var(--border-strong); background: var(--surface-2); color: var(--text-primary); font-size: 13px; cursor: pointer; transition: all .15s; font-weight: 500; }
+.timing-btns button:hover { background: var(--surface-1); }
+
+/* ===== TAB 4: QUIZ ===== */
+.quiz-card { background: var(--surface-1); border-radius: 12px; border: 0.5px solid var(--border); padding: 1.5rem; margin-bottom: 1rem; }
+.quiz-q { font-size: 15px; font-weight: 500; color: var(--text-primary); margin-bottom: 1rem; line-height: 1.5; }
+.quiz-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.quiz-opt { padding: 12px; border-radius: var(--radius); border: 0.5px solid var(--border-strong); background: var(--surface-2); cursor: pointer; font-size: 13px; color: var(--text-primary); text-align: left; transition: all .15s; font-weight: 400; }
+.quiz-opt:hover { background: var(--bg-accent); border-color: var(--border-accent); color: var(--text-accent); }
+.quiz-opt.correct { background: var(--bg-success); border-color: var(--border-success); color: var(--text-success); font-weight: 500; }
+.quiz-opt.wrong { background: var(--bg-danger); border-color: var(--border-danger); color: var(--text-danger); }
+.quiz-opt:disabled { cursor: default; opacity: .8; }
+.quiz-score { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.score-pill { background: var(--bg-accent); color: var(--text-accent); border-radius: 20px; padding: 4px 12px; font-size: 13px; font-weight: 500; }
+.quiz-feedback { font-size: 13px; margin-top: 12px; padding: 10px; border-radius: var(--radius); line-height: 1.5; min-height: 40px; }
+.quiz-feedback.ok { background: var(--bg-success); color: var(--text-success); }
+.quiz-feedback.err { background: var(--bg-danger); color: var(--text-danger); }
+.quiz-next { margin-top: 12px; width: 100%; padding: 10px; border-radius: var(--radius); border: 0.5px solid var(--border-strong); background: var(--surface-2); color: var(--text-primary); font-size: 13px; cursor: pointer; font-weight: 500; transition: all .15s; display: none; }
+.quiz-next:hover { background: var(--surface-1); }
+.quiz-end { text-align: center; padding: 2rem; }
+.quiz-end .big { font-size: 36px; font-weight: 500; color: var(--text-accent); }
+.quiz-end p { font-size: 14px; color: var(--text-secondary); margin: 8px 0 16px; }
+</style>
+
+<div class="app">
+  <div class="hero">
+    <h1>Flip-Flop tipo D</h1>
+    <p>Memória de 1 bit — explore o circuito, a tabela verdade e o diagrama de tempo</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(0)">Circuito</button>
+    <button class="tab" onclick="switchTab(1)">Tabela verdade</button>
+    <button class="tab" onclick="switchTab(2)">Diagrama de tempo</button>
+    <button class="tab" onclick="switchTab(3)">Quiz</button>
+  </div>
+
+  <!-- TAB 0: CIRCUITO -->
+  <div class="panel active" id="panel-0">
+    <div class="circuit-area">
+      <svg class="svg-circuit" viewBox="0 0 620 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+
+        <!-- Fio D -->
+        <line id="wire-d" x1="30" y1="90" x2="200" y2="90" stroke="#888" stroke-width="1.5" marker-end="url(#arr2)" fill="none"/>
+        <!-- Fio CLK -->
+        <line id="wire-clk" x1="30" y1="145" x2="200" y2="145" stroke="#888" stroke-width="1.5" marker-end="url(#arr2)" fill="none"/>
+        <!-- Fio Q saída -->
+        <line id="wire-q" x1="390" y1="90" x2="540" y2="90" stroke="#888" stroke-width="1.5" marker-end="url(#arr2)" fill="none"/>
+        <!-- Fio Q-barra saída -->
+        <line id="wire-qn" x1="390" y1="130" x2="540" y2="130" stroke="#888" stroke-width="1.5" marker-end="url(#arr2)" fill="none"/>
+
+        <!-- Labels de entrada -->
+        <text x="28" y="86" text-anchor="end" font-size="14" font-weight="500" fill="var(--text-secondary)" font-family="var(--font-mono)">D</text>
+        <text x="28" y="141" text-anchor="end" font-size="14" font-weight="500" fill="var(--text-secondary)" font-family="var(--font-mono)">CLK</text>
+
+        <!-- Corpo do FF (retângulo central) -->
+        <rect x="200" y="60" width="190" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border-strong)" stroke-width="1"/>
+        <text x="295" y="108" text-anchor="middle" font-size="16" font-weight="500" fill="var(--text-primary)" font-family="var(--font-sans)">FF-D</text>
+        <!-- Triângulo do clock (símbolo IEEE) -->
+        <polygon id="clk-tri" points="200,135 215,145 200,155" fill="var(--border-strong)"/>
+
+        <!-- Rótulos internos -->
+        <text x="214" y="88" font-size="12" fill="var(--text-muted)" font-family="var(--font-mono)">D</text>
+        <text x="214" y="148" font-size="12" fill="var(--text-muted)" font-family="var(--font-mono)">Ck</text>
+        <text x="376" y="88" text-anchor="end" font-size="12" fill="var(--text-muted)" font-family="var(--font-mono)">Q</text>
+        <text x="376" y="128" text-anchor="end" font-size="12" fill="var(--text-muted)" font-family="var(--font-mono)">Q̄</text>
+
+        <!-- Labels de saída -->
+        <text id="lbl-q"  x="542" y="88"  font-size="14" font-weight="500" font-family="var(--font-mono)" fill="var(--text-muted)">0</text>
+        <text id="lbl-qn" x="542" y="128" font-size="14" font-weight="500" font-family="var(--font-mono)" fill="var(--text-muted)">1</text>
+
+        <!-- Indicador de estado -->
+        <rect id="state-bg" x="240" y="120" width="110" height="26" rx="5" fill="var(--bg-success)"/>
+        <text id="state-txt" x="295" y="137" text-anchor="middle" font-size="12" font-weight="500" fill="var(--text-success)" font-family="var(--font-sans)">Estado: Q=0</text>
+
+        <!-- Círculo Q saída -->
+        <circle id="circ-q"  cx="400" cy="90"  r="7" fill="#1a2a0a" stroke="#3a5a1a" stroke-width="1.5"/>
+        <circle id="circ-qn" cx="400" cy="130" r="7" fill="#7ddb5c" stroke="#5ab33e" stroke-width="1.5"/>
+
+        <!-- Valores de entrada (círculos animados) -->
+        <circle id="circ-d"   cx="40"  cy="90"  r="7" fill="#1a2a0a" stroke="#3a5a1a" stroke-width="1.5"/>
+        <circle id="circ-clk" cx="40"  cy="145" r="7" fill="#0a1a2a" stroke="#1a3a5a" stroke-width="1.5"/>
+      </svg>
+
+      <div class="controls">
+        <div class="ctrl-card">
+          <div class="ctrl-label">Entrada</div>
+          <div class="ctrl-title">Sinal D</div>
+          <button class="signal-btn" onclick="toggleD()">
+            <span class="led led-off" id="led-d"></span>
+            <span id="lbl-d-btn">D = 0 — clique para mudar</span>
+          </button>
+        </div>
+        <div class="ctrl-card">
+          <div class="ctrl-label">Relógio</div>
+          <div class="ctrl-title">CLK</div>
+          <button class="signal-btn" onclick="toggleClk()">
+            <span class="led led-clk-off" id="led-clk"></span>
+            <span id="lbl-clk-btn">CLK = 0 — clique para mudar</span>
+          </button>
+        </div>
+      </div>
+
+      <button class="clock-btn" onclick="pulseClock()">
+        <i class="ti ti-player-play" aria-hidden="true"></i>
+        Pulso de clock (↑ borda de subida)
+      </button>
+    </div>
+
+    <div class="outputs-row">
+      <div class="out-card">
+        <div class="out-name">Saída Q</div>
+        <div class="out-val zero" id="out-q">0</div>
+      </div>
+      <div class="out-card">
+        <div class="out-name">Saída Q̄ (complemento)</div>
+        <div class="out-val one" id="out-qn">1</div>
+      </div>
+    </div>
+
+    <div class="explanation-box" id="exp-box">
+      CLK=0 — o flip-flop está <strong>travado</strong>. Mudanças em D não afetam Q. Aplique um pulso de clock para capturar D.
+    </div>
+  </div>
+
+  <!-- TAB 1: TABELA VERDADE -->
+  <div class="panel" id="panel-1">
+    <div class="truth-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>CLK (↑)</th>
+            <th>D</th>
+            <th>Q (próximo)</th>
+            <th>Q̄</th>
+            <th>Operação</th>
+          </tr>
+        </thead>
+        <tbody id="truth-body">
+          <tr id="row-0">
+            <td>0 / sem borda</td>
+            <td>X</td>
+            <td>Q<sub>n</sub></td>
+            <td>Q̄<sub>n</sub></td>
+            <td><span class="tag tag-keep">Mantém estado</span></td>
+          </tr>
+          <tr id="row-1" class="hl-zero">
+            <td>↑</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td><span class="tag tag-reset">Reset</span></td>
+          </tr>
+          <tr id="row-2" class="hl-one">
+            <td>↑</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span class="tag tag-set">Set</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:12px">A linha destacada corresponde ao estado atual do circuito na aba "Circuito".</p>
+    </div>
+
+    <div class="circuit-area" style="padding:1rem">
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px">
+        <strong style="color:var(--text-primary)">Por que só uma entrada?</strong><br>
+        O FF-SR (Set-Reset) tem o estado proibido quando S=R=1. O FF-D resolve isso conectando 
+        Q̄ à entrada S e Q à entrada R internamente — garante que D e D̄ nunca sejam iguais.
+      </p>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
+        <strong style="color:var(--text-primary)">Equação característica:</strong><br>
+        <code style="font-family:var(--font-mono);font-size:13px;background:var(--surface-2);padding:4px 8px;border-radius:4px;color:var(--text-primary)">Q(n+1) = D</code>
+        &nbsp;— na próxima borda de subida, Q recebe exatamente o valor de D.
+      </p>
+    </div>
+  </div>
+
+  <!-- TAB 2: DIAGRAMA DE TEMPO -->
+  <div class="panel" id="panel-2">
+    <div class="timing-wrap">
+      <canvas id="timing-canvas" class="timing-canvas" width="620" height="220"></canvas>
+      <div class="timing-legend">
+        <div class="timing-legend-item"><div class="dot" style="background:#5cb8db"></div>CLK</div>
+        <div class="timing-legend-item"><div class="dot" style="background:#7ddb5c"></div>D</div>
+        <div class="timing-legend-item"><div class="dot" style="background:#E8a23C"></div>Q</div>
+      </div>
+    </div>
+    <div class="timing-btns" style="margin-bottom:1rem">
+      <button onclick="runTimingDemo()"><i class="ti ti-player-play" aria-hidden="true"></i> Animar</button>
+      <button onclick="resetTiming()"><i class="ti ti-refresh" aria-hidden="true"></i> Reiniciar</button>
+    </div>
+    <div class="circuit-area" style="padding:1rem">
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
+        Observe que Q só muda nos <strong style="color:var(--text-primary)">flancos de subida</strong> (↑) do clock. Entre as bordas, Q permanece constante independente de D.
+      </p>
+    </div>
+  </div>
+
+  <!-- TAB 3: QUIZ -->
+  <div class="panel" id="panel-3">
+    <div class="quiz-score">
+      <span style="font-size:13px;color:var(--text-secondary)">Pergunta <span id="q-num">1</span> de <span id="q-total">5</span></span>
+      <span class="score-pill">Acertos: <span id="q-score">0</span></span>
+    </div>
+    <div class="quiz-card" id="quiz-card">
+      <div class="quiz-q" id="quiz-q-text"></div>
+      <div class="quiz-opts" id="quiz-opts"></div>
+      <div class="quiz-feedback" id="quiz-fb" style="display:none"></div>
+      <button class="quiz-next" id="quiz-next" onclick="nextQuestion()">Próxima pergunta →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let dVal = 0, clkVal = 0, qVal = 0;
+
+const questions = [
+  {
+    q: "No Flip-Flop tipo D, quando ocorre a captura do valor de D para Q?",
+    opts: ["A qualquer momento que D mudar", "Na borda de descida do clock", "Na borda de subida do clock (↑)", "Quando CLK=1 continuamente"],
+    ans: 2,
+    fb: "O FF-D sensível à borda captura D apenas no instante do flanco de subida (↑) do clock."
+  },
+  {
+    q: "Se D=0 e ocorre uma borda de subida do clock, qual é o próximo valor de Q?",
+    opts: ["Q=1", "Q=0", "Q permanece igual", "Indeterminado"],
+    ans: 1,
+    fb: "A equação característica é Q(n+1) = D. Como D=0, Q passa a ser 0."
+  },
+  {
+    q: "O que acontece com Q entre dois pulsos de clock?",
+    opts: ["Q acompanha D em tempo real", "Q vira sempre 0", "Q permanece no último valor capturado", "Q oscila"],
+    ans: 2,
+    fb: "Entre os flancos, o FF-D está 'travado' — Q memoriza o último valor e ignora D."
+  },
+  {
+    q: "Qual é a equação característica do Flip-Flop tipo D?",
+    opts: ["Q(n+1) = D · CLK", "Q(n+1) = D̄", "Q(n+1) = D", "Q(n+1) = Q · D"],
+    ans: 2,
+    fb: "Q(n+1) = D é a equação que define o FF-D: na próxima borda, Q recebe D."
+  },
+  {
+    q: "Qual problema do FF-SR o FF-D resolve?",
+    opts: ["Ele é mais rápido", "Elimina o estado proibido (S=R=1)", "Tem mais entradas", "Funciona sem clock"],
+    ans: 1,
+    fb: "O FF-D conecta D̄ em S e D em R internamente, impedindo que S=R=1 ocorra."
+  }
+];
+
+let qIdx = 0, score = 0, answered = false;
+
+function updateCircuit() {
+  const d = dVal, clk = clkVal;
+  document.getElementById('led-d').className = d ? 'led led-on' : 'led led-off';
+  document.getElementById('led-clk').className = clk ? 'led led-clk-on' : 'led led-clk-off';
+  document.getElementById('lbl-d-btn').textContent = `D = ${d} — clique para mudar`;
+  document.getElementById('lbl-clk-btn').textContent = `CLK = ${clk} — clique para mudar`;
+  document.getElementById('circ-d').setAttribute('fill', d ? '#7ddb5c' : '#1a2a0a');
+  document.getElementById('circ-d').setAttribute('stroke', d ? '#5ab33e' : '#3a5a1a');
+  document.getElementById('circ-clk').setAttribute('fill', clk ? '#5cb8db' : '#0a1a2a');
+  document.getElementById('circ-clk').setAttribute('stroke', clk ? '#3e9ab3' : '#1a3a5a');
+  document.getElementById('circ-q').setAttribute('fill', qVal ? '#7ddb5c' : '#1a2a0a');
+  document.getElementById('circ-q').setAttribute('stroke', qVal ? '#5ab33e' : '#3a5a1a');
+  document.getElementById('circ-qn').setAttribute('fill', qVal ? '#1a2a0a' : '#7ddb5c');
+  document.getElementById('circ-qn').setAttribute('stroke', qVal ? '#3a5a1a' : '#5ab33e');
+  const outQ = document.getElementById('out-q');
+  const outQn = document.getElementById('out-qn');
+  outQ.textContent = qVal; outQ.className = `out-val ${qVal ? 'one' : 'zero'}`;
+  outQn.textContent = 1-qVal; outQn.className = `out-val ${qVal ? 'zero' : 'one'}`;
+  document.getElementById('lbl-q').textContent = qVal;
+  document.getElementById('lbl-qn').textContent = 1-qVal;
+  const stateBg = document.getElementById('state-bg');
+  const stateTxt = document.getElementById('state-txt');
+  if (qVal) {
+    stateBg.setAttribute('fill', 'var(--bg-success)');
+    stateTxt.setAttribute('fill', 'var(--text-success)');
+  } else {
+    stateBg.setAttribute('fill', 'var(--bg-warning)');
+    stateTxt.setAttribute('fill', 'var(--text-warning)');
+  }
+  stateTxt.textContent = `Estado: Q=${qVal}`;
+  document.getElementById('wire-d').setAttribute('stroke', d ? '#7ddb5c' : '#555');
+  document.getElementById('wire-clk').setAttribute('stroke', clk ? '#5cb8db' : '#555');
+  document.getElementById('wire-q').setAttribute('stroke', qVal ? '#7ddb5c' : '#555');
+  document.getElementById('wire-qn').setAttribute('stroke', qVal ? '#555' : '#7ddb5c');
+  const exp = document.getElementById('exp-box');
+  if (clk === 0) {
+    exp.className = 'explanation-box warn';
+    exp.innerHTML = `CLK=0 — o flip-flop está <strong>travado</strong>. Mudanças em D não afetam Q. Aplique um pulso de clock para capturar D.`;
+  } else {
+    exp.className = 'explanation-box';
+    exp.innerHTML = `CLK=1 — pronto para capturar. Na <strong>borda de subida</strong>, Q receberá D=${d}. Clique em "Pulso de clock" para disparar.`;
+  }
+  // atualiza tabela
+  document.querySelectorAll('#truth-body tr').forEach(r => r.classList.remove('active-row'));
+  if (clk === 0) document.getElementById('row-0').classList.add('active-row');
+  else if (qVal === 0) document.getElementById('row-1').classList.add('active-row');
+  else document.getElementById('row-2').classList.add('active-row');
+}
+
+function toggleD() { dVal = 1 - dVal; updateCircuit(); }
+function toggleClk() { clkVal = 1 - clkVal; updateCircuit(); }
+
+function pulseClock() {
+  // borda de subida: captura D
+  const prev = qVal;
+  qVal = dVal;
+  clkVal = 1;
+  updateCircuit();
+  if (qVal !== prev) {
+    const wires = ['wire-q', 'wire-qn'];
+    wires.forEach(id => {
+      const el = document.getElementById(id);
+      const orig = el.getAttribute('stroke');
+      el.style.transition = 'none';
+      el.setAttribute('stroke', '#fff');
+      setTimeout(() => el.setAttribute('stroke', orig), 180);
+    });
+  }
+  setTimeout(() => { clkVal = 0; updateCircuit(); }, 400);
+}
+
+// Diagrama de tempo
+const CLK_PATTERN = [0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1];
+const D_PATTERN   = [0,0,0,0,1,1,1,1,0,0,1,1,1,1,0,0];
+let timingAnim = null;
+let timingStep = 0;
+
+function resolveQ(clkArr, dArr) {
+  let q = 0;
+  const qArr = [0];
+  for (let i = 1; i < clkArr.length; i++) {
+    if (clkArr[i] === 1 && clkArr[i-1] === 0) q = dArr[i];
+    qArr.push(q);
+  }
+  return qArr;
+}
+
+function drawTiming(steps) {
+  const canvas = document.getElementById('timing-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  const rows = [{name:'CLK',color:'#5cb8db',pat:CLK_PATTERN},{name:'D',color:'#7ddb5c',pat:D_PATTERN},{name:'Q',color:'#E8a23C',pat:resolveQ(CLK_PATTERN,D_PATTERN)}];
+  const rowH = 58, marginL = 48, marginR = 20, top = 14;
+  const nSteps = steps || CLK_PATTERN.length;
+  const stepW = (W - marginL - marginR) / (CLK_PATTERN.length);
+
+  // grades verticais nas bordas de subida
+  for (let i = 1; i < nSteps; i++) {
+    if (CLK_PATTERN[i] === 1 && CLK_PATTERN[i-1] === 0) {
+      ctx.strokeStyle = 'rgba(128,128,128,0.18)';
+      ctx.lineWidth = 0.8;
+      ctx.setLineDash([4,4]);
+      ctx.beginPath();
+      const xg = marginL + i * stepW;
+      ctx.moveTo(xg, top); ctx.lineTo(xg, top + rows.length * rowH);
+      ctx.stroke();
+    }
+  }
+  ctx.setLineDash([]);
+
+  rows.forEach((row, ri) => {
+    const y0 = top + ri * rowH;
+    ctx.fillStyle = 'rgba(128,128,128,0.06)';
+    ctx.fillRect(marginL, y0+4, W-marginL-marginR, rowH-8);
+
+    // nome da linha
+    ctx.fillStyle = row.color;
+    ctx.font = '12px "Anthropic Sans", sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(row.name, marginL - 6, y0 + rowH/2 + 4);
+
+    // sinal
+    ctx.strokeStyle = row.color;
+    ctx.lineWidth = 2;
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    let drawn = false;
+    for (let i = 0; i < nSteps; i++) {
+      const x = marginL + i * stepW;
+      const xn = marginL + (i+1) * stepW;
+      const yHigh = y0 + 10;
+      const yLow  = y0 + rowH - 14;
+      const yVal = row.pat[i] === 1 ? yHigh : yLow;
+      if (!drawn) { ctx.moveTo(x, yVal); drawn = true; }
+      else {
+        const yPrev = row.pat[i-1] === 1 ? yHigh : yLow;
+        if (yVal !== yPrev) { ctx.lineTo(x, yPrev); ctx.lineTo(x, yVal); }
+      }
+      if (i < nSteps - 1) ctx.lineTo(xn, yVal);
+    }
+    ctx.stroke();
+
+    // seta de borda de subida no CLK
+    if (ri === 0) {
+      for (let i = 1; i < nSteps; i++) {
+        if (CLK_PATTERN[i] === 1 && CLK_PATTERN[i-1] === 0) {
+          const xArrow = marginL + i * stepW;
+          ctx.fillStyle = '#5cb8db';
+          ctx.beginPath();
+          ctx.moveTo(xArrow, y0 + 10);
+          ctx.lineTo(xArrow - 5, y0 + 20);
+          ctx.lineTo(xArrow + 5, y0 + 20);
+          ctx.closePath();
+          ctx.fill();
+        }
+      }
+    }
+  });
+}
+
+function runTimingDemo() {
+  if (timingAnim) clearInterval(timingAnim);
+  timingStep = 1;
+  timingAnim = setInterval(() => {
+    if (timingStep >= CLK_PATTERN.length) { clearInterval(timingAnim); timingAnim = null; return; }
+    drawTiming(timingStep + 1);
+    timingStep++;
+  }, 120);
+}
+
+function resetTiming() {
+  if (timingAnim) clearInterval(timingAnim);
+  timingAnim = null;
+  drawTiming(1);
+}
+
+// Quiz
+function renderQuestion() {
+  if (qIdx >= questions.length) {
+    document.getElementById('quiz-card').innerHTML = `<div class="quiz-end"><div class="big">${score}/${questions.length}</div><p>${score >= 4 ? '🎓 Excelente! Você domina o FF-D.' : score >= 2 ? 'Bom trabalho! Revise os pontos marcados.' : 'Continue estudando — você chega lá!'}</p><button class="clock-btn" onclick="resetQuiz()">Refazer quiz</button></div>`;
+    return;
+  }
+  const q = questions[qIdx];
+  answered = false;
+  document.getElementById('q-num').textContent = qIdx + 1;
+  document.getElementById('q-total').textContent = questions.length;
+  document.getElementById('quiz-q-text').textContent = q.q;
+  document.getElementById('quiz-fb').style.display = 'none';
+  document.getElementById('quiz-next').style.display = 'none';
+  const optsDiv = document.getElementById('quiz-opts');
+  optsDiv.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt;
+    btn.onclick = () => checkAnswer(i);
+    optsDiv.appendChild(btn);
+  });
+}
+
+function checkAnswer(i) {
+  if (answered) return;
+  answered = true;
+  const q = questions[qIdx];
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach((b, idx) => {
+    b.disabled = true;
+    if (idx === q.ans) b.classList.add('correct');
+    else if (idx === i && i !== q.ans) b.classList.add('wrong');
+  });
+  if (i === q.ans) score++;
+  document.getElementById('q-score').textContent = score;
+  const fb = document.getElementById('quiz-fb');
+  fb.className = `quiz-feedback ${i === q.ans ? 'ok' : 'err'}`;
+  fb.textContent = q.fb;
+  fb.style.display = 'block';
+  document.getElementById('quiz-next').style.display = 'block';
+}
+
+function nextQuestion() {
+  qIdx++;
+  renderQuestion();
+}
+
+function resetQuiz() {
+  qIdx = 0; score = 0; answered = false;
+  document.getElementById('q-score').textContent = 0;
+  document.getElementById('quiz-card').innerHTML = `<div class="quiz-q" id="quiz-q-text"></div><div class="quiz-opts" id="quiz-opts"></div><div class="quiz-feedback" id="quiz-fb" style="display:none"></div><button class="quiz-next" id="quiz-next" onclick="nextQuestion()">Próxima pergunta →</button>`;
+  renderQuestion();
+}
+
+function switchTab(n) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i===n));
+  document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i===n));
+  if (n === 2) setTimeout(() => drawTiming(CLK_PATTERN.length), 50);
+}
+
+updateCircuit();
+renderQuestion();
+setTimeout(() => drawTiming(CLK_PATTERN.length), 100);
+</script>

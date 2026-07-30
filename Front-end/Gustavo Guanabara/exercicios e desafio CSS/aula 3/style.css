@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Roboto+Slab:wght@100..900&display=swap');
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #EFF8E2;
+}
+
+#titulo-principal {
+    font-family: Kalam;
+    text-align: center;
+    color: #23022E;
+    text-shadow: 1px 2px 1px #61000f;
+    background-color: #ADA8B6;
+    box-shadow: 3px 3px 3px #61000f;
+}
+
+.Titulo {
+    color: #4e0566;
+}
+
+.basico {
+    color: #22ab07;
+}
+
+.intermediario {
+    color: #3101b8;
+}
+
+.avancado {
+    color: #af0404;
+}

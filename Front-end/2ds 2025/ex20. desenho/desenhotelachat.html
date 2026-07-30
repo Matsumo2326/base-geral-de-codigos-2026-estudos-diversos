@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenho</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        canvas {
+            border: 1px solid black;
+            margin-top: 20px;
+        }
+        input[type="color"] {
+            margin-top: 10px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Desenho no Canvas</h1>
+
+    <canvas width="600" height="400"></canvas>
+    <br>
+
+    <label for="colorPicker">Escolha uma cor: </label>
+    <input type="color" id="colorPicker">
+    <br>
+
+    <button id="btnLimpar">Limpar Tela</button>
+    <button id="btnTrocarCor">Trocar Cor do Pincel</button>
+
+    <script>
+        var paleta = document.querySelector('#colorPicker');
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = 'gray'; // Cor de fundo inicial
+        pincel.fillRect(0, 0, 600, 400);
+
+        var desenha = false;
+        var corPincel = paleta.value; // Cor inicial do pincel
+
+        // Função para desenhar no canvas
+        tela.onmousemove = function(evento) {
+            if (desenha) {
+                var x = evento.pageX - tela.offsetLeft;
+                var y = evento.pageY - tela.offsetTop;
+
+                pincel.fillStyle = corPincel; // Usando a cor do pincel
+                pincel.beginPath();
+                pincel.arc(x, y, 10, 0, 2 * Math.PI);
+                pincel.fill();
+            }
+        };
+
+        tela.onmousedown = function() {
+            desenha = true;
+        };
+
+        tela.onmouseup = function() {
+            desenha = false;
+        };
+
+        // Botão Limpar
+        document.querySelector('#btnLimpar').onclick = function() {
+            pincel.fillStyle = 'gray'; // Cor de fundo
+            pincel.fillRect(0, 0, 600, 400);
+        };
+
+        // Trocar cor do pincel
+        document.querySelector('#btnTrocarCor').onclick = function() {
+            corPincel = paleta.value; // Atualiza a cor do pincel com a cor escolhida
+        };
+    </script>
+</body>
+</html>

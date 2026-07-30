@@ -1,0 +1,177 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Cabeçalho */
+header {
+  background: #ffcc00;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+}
+
+header .logo img {
+  margin-right: 10px;
+  border-radius: 50%;
+  width: 150px; 
+  height: 150px; 
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #000;
+}
+
+/* Seções */
+section {
+  padding: 40px 20px;
+}
+
+section h2 {
+  margin-bottom: 15px;
+  color: #444;
+}
+
+/* Contato */
+#contato ul {
+  list-style: none;
+}
+
+#contato li {
+  margin: 8px 0;
+}
+
+#contato a {
+  text-decoration: none;
+  color: #ff6600;
+}
+
+#contato a:hover {
+  text-decoration: underline;
+}
+
+/* Rodapé */
+footer {
+  text-align: center;
+  background: #333;
+  color: #fff;
+  padding: 15px;
+  margin-top: 30px;
+}
+
+/* Cardápio */
+.cardapio {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.cardapio .item {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+  padding: 15px;
+  background: #fdfdfd;
+}
+
+.cardapio img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+section h3 {
+  margin-top: 40px;
+  color: #ff6600;
+}
+
+/* Galeria */
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.galeria img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.galeria img {
+  width: 100%;
+  border-radius: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.galeria img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* Filiais */
+.filiais {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filial {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+  padding: 15px;
+  background: #fafafa;
+}
+
+.filial img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.filiais {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.filial {
+  background: #fff8e1;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.filial img {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>primos</title>
+</head>
+<body>
+
+    <script>
+        let num = window.prompt("Seu numero é primo?", ("Digite aqui seu numero inteiro"));
+        let i = 2;
+        let primo = true;
+        let ID = Math.floor(num/2);
+
+        while((primo) && (i <= ID)){
+        let resto = num % i;
+        if (resto == 0){
+            primo = false;
+        }
+
+        i = i + 1;
+    }
+    if(primo){
+        document.write("O número informado " + num + " é primo");
+    }
+    else{
+        document.write("O número informado " + num + " não é primo");
+    }
+    </script>
+    
+</body>
+</html>

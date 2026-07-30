@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formação de texto</title>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <h1>Principais Formatações</h1>
+    <h2>Negrito / Destaque.</h2>
+    <p>Nesta frase temos um <b>termo em negrito</b> usando a tag &lt;b&gt; (Não semântica)</p>
+    <p>Nesta frase temos um <strong>termo em destaque</strong> usando a tag &lt;strong&gt; (Semântica)</p>
+    <h2>Itálico / Ênfase</h2>
+    <p>Nesta frase temos um <i>termo em Itálico</i> usando a tag &lt;i&gt; (Não semântica)</p>
+    <p>Nesta frase temo um <em>Termo em Ênfase</em> usando a tag &lt;em&gt; (semântica)b</p>
+    <h2>Texto marcado</h2>
+    <p>Podemos criar um <mark style="background-color: blue;">texto marcado</mark> usando a tag &lt;mark&gt; (Não reconhecida normalmente. preisa ser utilizado o "envelopar por abreviação" no menu de atalhos do VScode studios)</p>
+    <h2>textos grandes e pequenos</h2>
+    <p>nesse parágrafo temos um <big>texto grade</big> e um <small>texto pequeno</small></p>
+    <h2>texto deletado</h2>
+    <p>podemos marcar um <del>texto como excluido</del> para ser lido e não considerado</p>
+    <h2>Texto inserido</h2>
+    <p>podemos marcar um <ins>texto como inserido</ins> para demonstrar que ele foi colocado depois.</p>
+    <p>tambem temos o <u>sublinado</u> com a tag &lt;u&gt; (Não semântica)</p>
+    <h2>Texto sobreescrito</h2>
+    <p>Quando você quer escrever coisas do tipo x<sup>20</sup>+2</p>
+    <h2>Texto subescrito</h2>
+    <p>Quando você quer escrever coisas do tipo H<sub>2</sub>O</p>
+    <h1>Outras formações</h1>
+    <h2>Codigo fonte / Pré-formaçãoes</h2> 
+    <p>o comando <code>document.getElementById('teste')</code> é em JavaScript, colocado dentro da tag &lt;code&gt;para ter um bom espaçamento para ler um codigo.</p>    <p>em python por exemplo junto da tag &lt;pre&gt; para ajudar na hora da leitura.</p>
+        <pre>
+        <code>
+        print:"hello world"
+        </code>
+        </pre> 
+    <h2>Citações simples</h2>
+    <p>As citações são necessarias em varias coisas, para uma citação em um paragrafo como por exemplo, <q>eu sou um nerd de carteirinha</q> dito pelo Gustavo Guanabara é so usar a tag &lt;q&gt;</p>
+    <h2>Citações Completas</h2>
+    <p>porem se a citação se englobar em um paragrafo utiliza a tag &lt;blockquote&gt;. <strong><em>Exemplo:</em></strong></p>
+    <blockquote>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis ipsa iste nostrum, velit architecto iure nobis inventore in corrupti, aliquam, explicabo officia. Non eum, similique consequatur repellat nulla odio possimus.</blockquote>
+    <p>tambem é possivel colocar o link do site de onde paragrafo se origina, usando o parãmetro <code>Cite</code>, <strong><em>Exemplo:</em></strong></p>
+    <blockquote cite="https://kenzie.com.br/blog/o-que-e-python/">
+        Python é uma linguagem de programação de alto nível — ou High Level Language —, dinâmica, interpretada, modular, multiplataforma e orientada a objetos — uma forma específica de organizar softwares onde, a grosso modo, os procedimentos estão submetidos às classes, o que possibilita maior controle e estabilidade de códigos para projetos de grandes proporções.
+    </blockquote>
+    <h2>Abreviações</h2>
+    <p>Utilizando a Tag &lt;abbr&gt; podemos dar sentido a siglas. <strong><em>Exemplo:</em></strong></p>
+    <p>Eu estou estudando <abbr title="HyperText Markup Language">HTML</abbr> e <abbr title="Cascading style Sheets">CSS</abbr> e   estou adorando!</p>
+    <h2>texto invertido</h2>
+    <p>A tag &lt;bdo&gt; utilizando o parametro do lado que deseja muda o lado do texto, porem não conheço utilidade para isso.</p>
+    <bdo dir="rtl">Testando essa porra sei la pra que serve</bdo>
+</body>
+
+</html>

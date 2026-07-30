@@ -1,0 +1,8 @@
+p {
+    color: blue;
+    border-style: dashed;
+    border-width: thick;
+    font-size: xx-large;
+    text-transform: capitalize;
+    background-color: brown;
+}

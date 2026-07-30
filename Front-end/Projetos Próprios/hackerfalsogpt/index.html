@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulação Hacker - Estudo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #000;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      color: white;
+    }
+
+    .background-glow {
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(90,20,130,0.25), transparent 70%);
+      filter: blur(40px);
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 80px;
+      width: 1200px;
+      max-width: 95%;
+    }
+
+    .phone {
+      width: 340px;
+      height: 680px;
+      background: #0f0f0f;
+      border: 10px solid #1f1f1f;
+      border-radius: 45px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    }
+
+    .phone::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 22px;
+      background: #000;
+      border-radius: 0 0 18px 18px;
+      z-index: 10;
+    }
+
+    .phone-screen {
+      background: #000;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .insta-logo {
+      display: flex;
+      justify-content: center;
+     margin-bottom: 55px;
+    }
+
+    .insta-logo img {
+         width: 190px;
+         height: auto;
+         object-fit: contain;
+    }
+
+    .input {
+      width: 100%;
+      padding: 17px;
+      margin-bottom: 14px;
+      border-radius: 12px;
+      border: 1px solid #2a2a2a;
+      background: #121212;
+      color: #fafafa;
+      font-size: 16px;
+      transition: 0.2s;
+      box-shadow: inset 0 0 10px rgba(255,255,255,0.02);
+    }
+
+    .input:focus {
+      outline: none;
+      border-color: #3a3a3a;
+      background: #161616;
+      box-shadow: 0 0 10px rgba(255,255,255,0.05);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: #0095f6;
+      color: white;
+      font-weight: bold;
+      margin-top: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 16px;
+      box-shadow: 0 0 20px rgba(0,149,246,0.25);
+    }
+
+    .login-btn:hover {
+      background: #1aa1ff;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 25px 0;
+      color: #777;
+      font-size: 13px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #262626;
+    }
+
+    .divider span {
+      margin: 0 10px;
+    }
+
+    .terminal-box {
+      flex: 1;
+      height: 650px;
+      background: #050505;
+      border: 1px solid #1f1f1f;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0,255,100,0.08);
+    }
+
+    .terminal-header {
+      background: #0f0f0f;
+      border-bottom: 1px solid #1f1f1f;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .red { background: #ff5f56; }
+    .yellow { background: #ffbd2e; }
+    .green { background: #27c93f; }
+
+    .terminal-title {
+      color: #666;
+      font-size: 13px;
+      margin-left: 10px;
+      font-family: monospace;
+    }
+
+.terminal-output {
+  padding: 20px;
+  height: calc(100% - 50px);
+  overflow-y: auto;
+
+  font-family:
+    "Cascadia Code",
+    "JetBrains Mono",
+    "Fira Code",
+    "Consolas",
+    monospace;
+
+  color: #00ff88;
+  line-height: 1.8;
+  font-size: 15px;
+  background: #000;
+
+  text-shadow:
+    0 0 4px rgba(0,255,120,0.35),
+    0 0 8px rgba(0,255,120,0.15);
+
+  letter-spacing: 0.5px;
+}
+    .success {
+      color: #3fb950;
+      text-shadow: 0 0 8px rgba(63,185,80,0.5);
+    }
+
+    .fail {
+      color: #ff4d4d;
+    }
+
+    .fake-warning {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background: rgba(255,0,0,0.12);
+      border: 1px solid rgba(255,0,0,0.4);
+      border-radius: 999px;
+      color: #ff7b7b;
+      font-size: 12px;
+      letter-spacing: 1px;
+      backdrop-filter: blur(10px);
+      z-index: 5;
+    }
+
+    @media(max-width: 1000px) {
+      .container {
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      .terminal-box {
+        width: 100%;
+        height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background-glow"></div>
+
+  <div class="fake-warning">
+    SIMULAÇÃO VISUAL FICTÍCIA — NENHUM DADO REAL É ACESSADO
+  </div>
+
+  <div class="container">
+
+    <div class="phone">
+      <div class="phone-screen">
+
+        <div class="insta-logo"><img src="./baixados (1).png" alt=""></div>
+
+        <input class="input" type="text" id="user" placeholder="Telefone, nome de usuário ou email">
+
+        <input class="input" type="password" id="pass" placeholder="Senha">
+
+        <button class="login-btn" onclick="startSimulation()">
+          Entrar
+        </button>
+
+        <div class="divider">
+          <span>OU</span>
+        </div>
+
+        <div style="text-align:center;color:#1877f2;font-weight:bold;font-size:15px;margin-top:10px;cursor:pointer;">
+          Continuar com Facebook
+        </div>
+
+        <div style="text-align:center;color:#0095f6;font-size:14px;margin-top:25px;cursor:pointer;">
+          Esqueceu a senha?
+        </div>
+
+        <div style="position:absolute;bottom:35px;left:0;width:100%;text-align:center;color:#888;font-size:14px;">
+          Não tem uma conta?
+          <span style="color:#0095f6;font-weight:bold;cursor:pointer;">Cadastre-se</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="terminal-box">
+
+      <div class="terminal-header">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+
+        <div class="terminal-title">
+          root@shadow-terminal:~
+        </div>
+      </div>
+
+      <div class="terminal-output" id="output">
+        > Inicializando terminal...<br>
+        > Sistema aguardando comando.<br>
+        > Simulação visual pronta.
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const output = document.getElementById('output');
+
+    const fakePasswords = [
+      '123456',
+      'password',
+      'qwerty',
+      'instagram123',
+      'admin',
+      'senha123',
+      '000000',
+      'matheus2008',
+      'dragonfire',
+      'shadow.exe'
+    ];
+
+    function addLine(text, className = '') {
+      const line = document.createElement('div');
+      line.innerHTML = text;
+
+      if(className) {
+        line.classList.add(className);
+      }
+
+      output.appendChild(line);
+      output.scrollTop = output.scrollHeight;
+    }
+
+async function startSimulation() {
+  output.innerHTML = '';
+
+  const user =
+    document.getElementById('user').value || 'unknown_user';
+
+  addLine('[SYSTEM] booting shadow-terminal...');
+  addLine('[OK] secure socket initialized');
+  addLine('[OK] proxy tunneling enabled');
+  addLine('[OK] encrypted relay online');
+  addLine('');
+
+  await wait(900);
+
+  addLine('[TARGET] @' + user);
+  addLine('[SCAN] collecting authentication vectors...');
+  addLine('');
+
+  await wait(1200);
+
+  const attempts = 35;
+
+  for(let i = 0; i < attempts; i++) {
+
+    await wait(180 + Math.random() * 220);
+
+    const length =
+      Math.floor(Math.random() * 12) + 6;
+
+    let fakePass = '';
+
+    for(let j = 0; j < length; j++) {
+      fakePass += '*';
+    }
+
+    const randomChar =
+      String.fromCharCode(
+        97 + Math.floor(Math.random() * 26)
+      );
+
+    fakePass =
+      fakePass.substring(0, fakePass.length - 1)
+      + randomChar;
+
+    addLine(
+      `[ATTEMPT ${String(i + 1).padStart(2, '0')}] ` +
+      `password => ${fakePass}`,
+      'fail'
+    );
+  }
+
+  addLine('');
+  addLine('[BYPASS] suspicious response detected...', 'success');
+
+  await wait(1400);
+
+  addLine('[TOKEN] session hijack simulated', 'success');
+
+  await wait(900);
+
+  addLine('[ACCESS] fake access granted', 'success');
+  addLine('[DOWNLOAD] extracting mock messages...');
+  addLine('[DOWNLOAD] extracting mock media...');
+  addLine('[DOWNLOAD] extracting mock cookies...');
+
+  await wait(2000);
+
+  addLine('');
+  addLine('[WARNING] VISUAL SIMULATION ONLY', 'success');
+  addLine('[INFO] no real data was accessed', 'success');
+}
+
+    function wait(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for</title>
+</head>
+<body>
+    <h1>Usando estrutura de dados Array com for</h1>
+    <script> 
+        let nomes = new Array("Manuel", "Rita", "Otavio", "Ronaldo", "Ricardo");
+
+        let cont;
+
+        for(cont = 0; cont < nomes.length; cont++){
+            let aluno = nomes[cont];
+            if(aluno.charAt(0) == "R" || (aluno.charAt(0) == "r")) {
+                document.write("O nome " + aluno + " começa coma letra R<br>")
+            }
+        }
+    </script>
+</body>
+</html>

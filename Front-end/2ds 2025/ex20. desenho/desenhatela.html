@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenho</title>
+</head>
+<body>
+    <canvas width="600" height="400"></canvas>
+    <br>
+    Escolha uma cor <input type="color">
+    <script>
+        var paleta = document.querySelector('input');
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d')
+
+        pincel.fillStyle='gray';
+        pincel.fillRect(0,0,600,400);
+
+        var desenha = false;
+
+        tela.onmousemove = function(evento) {
+            if(desenha){
+                var x = evento.pageX - tela.offsetLeft;
+                var y = evento.pageY - tela.offsetTop;
+
+                pincel.fillStyle = paleta.value;
+                pincel.beginPath();
+                pincel.arc(x,y, 10, 0, 2 * Math.PI);
+                pincel.fill();
+            }
+            console.log(x + ',' + y);
+        }
+
+        tela.onmousedown = function(){
+            desenha = true;
+        }
+
+        tela.onmouseup = function(){
+            desenha = false;
+        }
+    </script>
+</body>
+</html>
