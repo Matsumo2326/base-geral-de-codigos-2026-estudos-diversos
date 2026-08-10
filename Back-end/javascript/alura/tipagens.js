@@ -55,3 +55,4 @@ const textob1 = "Alura";
 const textob2 = "A";
 console.log (textob2 === textob1);
 
+// usualmente, enquanto null é um valor atribuído a uma variável que existe e foi iniciada, undefined se refere ao valor de uma variável que não foi inicializada (ou seja, não foi atribuído nenhum valor a ela).
