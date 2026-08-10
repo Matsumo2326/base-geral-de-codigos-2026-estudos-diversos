@@ -40,3 +40,18 @@ console.log(texto1)
 console.log(citacao + texto1)
 
 // template string ou template literal
+
+
+
+// booleanos 
+const numb1 = 10;
+const numb2 = 10;
+let variacad = false;
+console.log (numb1 === numb2);
+//true verdadeiro
+//false falso
+
+const textob1 = "Alura";
+const textob2 = "A";
+console.log (textob2 === textob1);
+
