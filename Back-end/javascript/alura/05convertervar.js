@@ -26,3 +26,10 @@ console.log(numstring+numstring);
 const string = "AA";
 const string2 = "AA";
 console.log(string*string2);
+
+//.toString() só funciona se existir valor, se for null ou unde não funciona 
+var seila = "5A";
+console.log(Number(seila))
+
+
+// não se pode declarar nada com as palavras reservadas
